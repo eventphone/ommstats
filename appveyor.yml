@@ -22,17 +22,10 @@ dotnet_csproj:
   assembly_version: '{version}'
   file_version: '{version}'
   informational_version: '{version}'
-before_build:
-- cmd: nuget restore
-build:
-  project: ommstats.sln
-  publish_core_console: true
-  parallel: true
-  verbosity: minimal
-after_build:
-- cmd: del src\ommstats\bin\%CONFIGURATION%\netcoreapp2.1\*.dev.json && 7z a ommstats-%APPVEYOR_BUILD_VERSION%.zip %APPVEYOR_BUILD_FOLDER%\src\ommstats\bin\%CONFIGURATION%\netcoreapp2.1\*
+build_script:
+- cmd: dotnet publish -c %CONFIGURATION%
 artifacts:
-- path: ommstats-*.zip
+- path: src\bin\$(configuration)\netcoreapp2.1\publish
   name: gh-release
 deploy:
 - provider: GitHub
