@@ -1,0 +1,3 @@
+[submodule "lib/mitel-api"]
+	path = lib/mitel-api
+	url = https://github.com/eventphone/mitel-api.git

@@ -32,7 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\mitel-api\src\mitel-api\mitel-api.csproj" />
+    <ProjectReference Include="..\..\lib\mitel-api\src\mitel-api\mitel-api.csproj" />
   </ItemGroup>
 
 </Project>
