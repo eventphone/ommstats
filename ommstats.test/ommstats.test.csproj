@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OmmStats\ommstats.csproj" />
+    <ProjectReference Include="..\ommstats\ommstats.csproj" />
   </ItemGroup>
 
 </Project>
