@@ -33,7 +33,10 @@ namespace eventphone.ommstats
 
         static void Main(string[] args)
         {
-            var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json", optional: false).Build();
+            var configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json", optional: false)
+                .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json", optional: true)
+                .Build();
 
             var serviceCollection = new ServiceCollection()
                 .AddLogging(o => o.AddConfiguration(configuration.GetSection("Logging"))
