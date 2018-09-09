@@ -1,4 +1,4 @@
-﻿namespace OmmStats
+﻿namespace eventphone.ommstats
 {
     public class GraphiteEscaper
     {

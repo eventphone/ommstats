@@ -1,8 +1,16 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <RootNamespace>eventphone.ommstats</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+    <Company>eventphone</Company>
+    <Authors>Bianco Veigel &lt;zivillian@eventphone.de&gt;</Authors>
   </PropertyGroup>
 
   <ItemGroup>

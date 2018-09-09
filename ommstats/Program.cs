@@ -12,9 +12,8 @@ using mitelapi.Types;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Console;
 
-namespace OmmStats
+namespace eventphone.ommstats
 {
     class Program:IDisposable
     {
