@@ -36,6 +36,8 @@ artifacts:
   name: gh-release
 deploy:
 - provider: GitHub
+  tag: v$(appveyor_build_version)
+  release: v$(appveyor_build_version)
   auth_token:
     secure: yL6am9X6fH3tkMyXORFGKmkIknr6w+QNBo6wZ9TwGP9RE5iJ5VAUK6IuMvKNBWbb
   artifact: gh-release
