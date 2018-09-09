@@ -30,7 +30,7 @@ dotnet_csproj:
 build_script:
 - cmd: dotnet publish -c %CONFIGURATION%
 artifacts:
-- path: src\bin\$(configuration)\netcoreapp2.1\publish
+- path: src\ommstats\bin\$(configuration)\netcoreapp2.1\publish
   name: gh-release
 deploy:
 - provider: GitHub
