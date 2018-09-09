@@ -1,0 +1,44 @@
+version: 0.0.{build}
+pull_requests:
+  do_not_increment_build_number: true
+branches:
+  only:
+  - master
+image: Visual Studio 2017
+configuration: Release
+platform: Any CPU
+clone_script:
+- cmd: >-
+    git clone -q --branch=%APPVEYOR_REPO_BRANCH% https://github.com/%APPVEYOR_REPO_NAME%.git %APPVEYOR_BUILD_FOLDER%
+    && cd %APPVEYOR_BUILD_FOLDER%
+    && git checkout -qf %APPVEYOR_REPO_COMMIT%
+    && git submodule update --init --recursive
+dotnet_csproj:
+  patch: true
+  file: '**\ommstats.csproj'
+  version: '{version}'
+  package_version: '{version}'
+  assembly_version: '{version}'
+  file_version: '{version}'
+  informational_version: '{version}'
+before_build:
+- cmd: nuget restore
+build:
+  project: ommstats.sln
+  publish_core_console: true
+  parallel: true
+  verbosity: minimal
+after_build:
+- cmd: 7z a ommstats-%APPVEYOR_BUILD_VERSION%.zip %APPVEYOR_BUILD_FOLDER%\src\ommstats\bin\%CONFIGURATION%\netcoreapp2.1\*
+artifacts:
+- path: ommstats-*.zip
+  name: gh-release
+deploy:
+- provider: GitHub
+  auth_token:
+    secure: yL6am9X6fH3tkMyXORFGKmkIknr6w+QNBo6wZ9TwGP9RE5iJ5VAUK6IuMvKNBWbb
+  artifact: gh-release
+  draft: true
+  force_update: true
+  on:
+    branch: master

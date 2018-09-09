@@ -11,6 +11,7 @@
     <WarningsAsErrors />
     <Company>eventphone</Company>
     <Authors>Bianco Veigel &lt;zivillian@eventphone.de&gt;</Authors>
+    <Version>0.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
