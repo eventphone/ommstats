@@ -1,3 +1,5 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/dorcn4d1cvgh683m/branch/master?svg=true)](https://ci.appveyor.com/project/eventphone/ommstats/branch/master)
+
 ## What?
 Fetch all RFP, User and PP statistics from OMM (Open Mobility Manager) and send them to a graphite endpoint.
 
