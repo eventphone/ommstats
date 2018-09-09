@@ -29,7 +29,7 @@ build:
   parallel: true
   verbosity: minimal
 after_build:
-- cmd: rm src\ommstats\bin\%CONFIGURATION%\netcoreapp2.1\*.dev.json && 7z a ommstats-%APPVEYOR_BUILD_VERSION%.zip %APPVEYOR_BUILD_FOLDER%\src\ommstats\bin\%CONFIGURATION%\netcoreapp2.1\*
+- cmd: del src\ommstats\bin\%CONFIGURATION%\netcoreapp2.1\*.dev.json && 7z a ommstats-%APPVEYOR_BUILD_VERSION%.zip %APPVEYOR_BUILD_FOLDER%\src\ommstats\bin\%CONFIGURATION%\netcoreapp2.1\*
 artifacts:
 - path: ommstats-*.zip
   name: gh-release
