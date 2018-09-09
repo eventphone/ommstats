@@ -7,15 +7,15 @@ The OMP table view is not really helpful. And we like fancy grafana dashboards.
 
 ## Can I take a look?
 ![Users](./doc/Users.png)
-![BMC Frame Error](./doc/BMC_Frame_error.png)
+![BMC Frame Error](./doc/BMC_Frame_Error.png)
 More screenshots will be added after the next event.
 
 ## How
 
 #### checkout & run
 ``` sh
-$ git clone https://github.com/eventphone/ommstats.git
-$ cd src/ommstats
+$ git clone --recurse-submodules https://github.com/eventphone/ommstats.git
+$ cd ommstats/src/ommstats
 $ dotnet run
 ```
 
