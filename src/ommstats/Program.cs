@@ -188,14 +188,16 @@ namespace eventphone.ommstats
                 {
                     var group = escaper.Escape(statName.Group);
                     var metric = escaper.Escape(statName.Name);
+                    if (rfpStats.Data == null) continue;
                     foreach (var rfp in rfpStats.Data)
                     {
                         var value = rfp.Values[statName.Id];
                         target.Add($"omm.rfpstats.{group}.{metric}.{rfp.Id}", value);
                     }
                 }
-                id = rfpStats.Data.Max(x => x.Id) + 1;
-            } while (rfpStats.Data.Length == count);
+                if (rfpStats.Data != null)
+                  id = rfpStats.Data.Max(x => x.Id) + 1;
+            } while (rfpStats.Data != null && rfpStats.Data.Length == count);
         }
         
         protected virtual void Dispose(bool disposing)
