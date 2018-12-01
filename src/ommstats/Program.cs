@@ -145,6 +145,7 @@ namespace eventphone.ommstats
                 {"omm.mgr.rtt", _client.Rtt.TotalSeconds},
             };
             await AddRfpStatsAsync(values, cancellationToken);
+            await AddPPStatsAsync(values, cancellationToken);
             await SendMetricValuesAsync(values, cancellationToken);
             _logger.LogDebug("Sent metrics");
         }
@@ -198,6 +199,12 @@ namespace eventphone.ommstats
                 if (rfpStats.Data != null)
                   id = rfpStats.Data.Max(x => x.Id) + 1;
             } while (rfpStats.Data != null && rfpStats.Data.Length == count);
+        }
+
+        private async Task AddPPStatsAsync(Dictionary<string, double> target, CancellationToken cancellationToken)
+        {
+            var pps = await _client.GetPPAllDevAsync(cancellationToken);
+            target.Add($"omm.pp.encrypted", pps.Count(x=>x.Encrypt.GetValueOrDefault(false)));
         }
         
         protected virtual void Dispose(bool disposing)
