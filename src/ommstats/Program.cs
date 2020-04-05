@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net.Security;
 using System.Net.Sockets;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 using mitelapi;
@@ -87,7 +89,7 @@ namespace eventphone.ommstats
 
         private Program(string ommHost, int ommPort, string username, string password, string graphiteHost, int graphitePort, long interval)
         {
-            _client = new OmmClient(ommHost, ommPort);
+            _client = new MitelClient(ommHost, ommPort);
             _username = username;
             _password = password;
             _graphiteHost = graphiteHost;
@@ -225,6 +227,18 @@ namespace eventphone.ommstats
         {
             Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        class MitelClient : OmmClient
+        {
+            public MitelClient(string hostname, int port = 12622) : base(hostname, port)
+            {
+            }
+
+            protected override bool CertificateValidationCallback(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
+            {
+                return true;
+            }
         }
     }
 }
