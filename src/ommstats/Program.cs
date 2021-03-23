@@ -185,7 +185,7 @@ namespace eventphone.ommstats
             GetRFPStatisticResp rfpStats;
             var rfps = await _client.GetRFPAllAsync(false, false, cancellationToken);
             var rfpNames = rfps
-                .GroupBy(x => x.Name).Where(x => x.Count() == 1) //distinct by name
+                .GroupBy(x => x.Name).Where(x => x.Count() == 1) //skip duplicate names
                 .SelectMany(x => x)
                 .Where(x => x.Id.HasValue)
                 .ToDictionary(x => x.Id.Value, x => x.Name);
@@ -203,7 +203,7 @@ namespace eventphone.ommstats
                         var value = rfp.Values[statName.Id];
                         if (!rfpNames.TryGetValue(rfp.Id, out var rfpName))
                         {
-                            rfpName = id.ToString();
+                            rfpName = rfp.Id.ToString();
                         }
                         rfpName = escaper.Escape(rfpName);
                         target.Add($"omm.rfpstats.{rfpName}.{group}.{metric}", value);
