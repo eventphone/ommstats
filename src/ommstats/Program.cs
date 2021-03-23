@@ -33,7 +33,7 @@ namespace eventphone.ommstats
         private readonly ILogger<OmmClient> _ommLogger;
         private readonly ILogger _logger;
 
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             var configuration = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json", optional: false)
@@ -63,7 +63,7 @@ namespace eventphone.ommstats
                     Console.CancelKeyPress += Cancelled;
                     try
                     {
-                        instance.RunAsync(cts.Token).GetAwaiter().GetResult();
+                        await instance.RunAsync(cts.Token);
                     }
                     catch (TaskCanceledException)
                     {
@@ -184,6 +184,11 @@ namespace eventphone.ommstats
             const int count = 20;
             GetRFPStatisticResp rfpStats;
             var rfps = await _client.GetRFPAllAsync(false, false, cancellationToken);
+            var rfpNames = rfps
+                .GroupBy(x => x.Name).Where(x => x.Count() == 1) //distinct by name
+                .SelectMany(x => x)
+                .Where(x => x.Id.HasValue)
+                .ToDictionary(x => x.Id.Value, x => x.Name);
             do
             {
                 rfpStats = await _client.GetRFPStatisticAsync(id, count, 0, cancellationToken);
@@ -196,9 +201,10 @@ namespace eventphone.ommstats
                     foreach (var rfp in rfpStats.Data)
                     {
                         var value = rfp.Values[statName.Id];
-                        var rfpName = rfps.Where(x => x.Id == rfp.Id).Select(x => x.Name).FirstOrDefault();
-                        if (String.IsNullOrEmpty(rfpName))
+                        if (!rfpNames.TryGetValue(rfp.Id, out var rfpName))
+                        {
                             rfpName = id.ToString();
+                        }
                         rfpName = escaper.Escape(rfpName);
                         target.Add($"omm.rfpstats.{rfpName}.{group}.{metric}", value);
                     }
