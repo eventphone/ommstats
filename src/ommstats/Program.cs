@@ -73,7 +73,7 @@ namespace eventphone.ommstats
                     }
                     catch (SocketException ex)
                     {
-                        logger.LogError(ex, "Error while executing OmmStats");
+                        logger.LogError(ex, "Connection error while executing OmmStats");
                     }
                     catch (Exception ex)
                     {
@@ -81,6 +81,17 @@ namespace eventphone.ommstats
                         throw;
                     }
                     Console.CancelKeyPress -= Cancelled;
+                    if (!cts.IsCancellationRequested)
+                    {
+                        try
+                        {
+                            cts.Cancel();
+                        }
+                        catch
+                        {
+                            //don't care, something else failed before
+                        }
+                    }
                     void Cancelled(object s, ConsoleCancelEventArgs e)
                     {
                         logger.LogInformation("stopping...");
