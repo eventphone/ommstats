@@ -71,6 +71,10 @@ namespace eventphone.ommstats
                     catch (OperationCanceledException)
                     {
                     }
+                    catch (SocketException ex)
+                    {
+                        logger.LogError(ex, "Error while executing OmmStats");
+                    }
                     catch (Exception ex)
                     {
                         logger.LogError(ex, "Error while executing OmmStats");
