@@ -8,17 +8,17 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
       with:
         submodules: recursive   
-    - uses: actions/setup-dotnet@v1
+    - uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '6.0'
     - run: 'dotnet restore'
     - run: 'dotnet test -c Release'
     - run: 'dotnet publish -o publish -c Release src/ommstats/ommstats.csproj'
     - name: Upload result
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: publish
         path: publish
